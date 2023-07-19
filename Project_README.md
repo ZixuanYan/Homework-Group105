@@ -1,13 +1,17 @@
 # 项目汇总
 
-本次实验共完成18个项目，各项目说明与仓库链接如下：
+将所有项目分类，如下列所示，各项目简介与仓库链接如下：
 
 ## SM3
 
-Project：
+**Project：**
+1. implement the naïve birthday attack of reduced SM3
+2. implement the Rho method of reduced SM3
+3. implement length extension attack for SM3, SHA256, etc
+4. do your best to optimize SM3 implementation (software)
 
-Link： 
-
+**Link：** 
+[SM3](https://github.com/ZixuanYan/SM3)
 
 # 其他
 
@@ -24,9 +28,6 @@ Github账户地址：https://github.com/ZixuanYan
 小组：Group105
 
 此项目组员仅本人 
-
-
-## 未完成项目
 
 
 
@@ -46,8 +47,5 @@ Github账户地址：https://github.com/ZixuanYan
 
 编译器：Visual Studio 2019  Python 3.10 
 
-
-
-## 运行数据
 
 
