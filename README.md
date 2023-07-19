@@ -11,7 +11,7 @@
 4. do your best to optimize SM3 implementation (software)
 
 **Link：** 
-[SM3](https://github.com/ZixuanYan/SM3)
+[SM3](https://github.com/ZixuanYan/Homework-Group105/tree/SM3)
 
 # 其他
 
