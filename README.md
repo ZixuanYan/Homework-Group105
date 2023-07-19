@@ -1,51 +1,88 @@
-# 项目汇总
+# 实验名称
+**SM3项目分类** 
 
-将所有项目分类，如下列所示，各项目简介与仓库链接如下：
+# 实验内容
+1. SM3 生日攻击；
+2. SM3 Rho攻击；
+3. SM3 长度扩展攻击；
+4. SM3 优化；
 
-## SM3
-
-**Project：**
-1. implement the naïve birthday attack of reduced SM3
-2. implement the Rho method of reduced SM3
-3. implement length extension attack for SM3, SHA256, etc
-4. do your best to optimize SM3 implementation (software)
-
-**Link：** 
-[SM3](https://github.com/ZixuanYan/SM3)
-
-# 其他
-
-## 个人信息
-
+# 作者
 姓名：闫子轩
+
+组号：Group105
 
 学号：202100460160
 
-班级：网络空间安全2021级1班
-
 Github账户地址：https://github.com/ZixuanYan
 
-小组：Group105
+# 软件环境
 
-此项目组员仅本人 
+编译器：Python 3.10
 
+# 生日攻击
 
+首先需要定义一些辅助函数和常量，包括左移函数leftshift、FF和GG函数、P0和P1函数、T函数以及初始向量IV等。
 
-## 环境配置
+然后padding函数，用于对输入消息进行填充，使其长度满足SM3算法的要求。
 
-采用平台环境配置如下：
+接下来的block函数将填充后的消息按照128比特分块。
 
-**硬件环境：**
+message_extension函数根据分块后的消息生成消息扩展，其中使用了W和W1两个列表存储中间结果。
 
-处理器：AMD Ryzen 7 5800H with Radeon Graphics 3.20 GHz
+message_compress函数根据消息扩展对当前块进行压缩运算。
 
-内存：16GB
+最后的SM3函数将所有分块进行压缩运算得到最终的输出。
 
-**软件环境：**
+randomnum函数生成指定数量的随机数。
 
-操作系统：Windows 10 家庭中文版 x64
+brithday_attack函数实现了生日攻击，它首先生成2^16个随机数，并利用padding、block和SM3函数获得对应的哈希值。然后统计哈希值的出现次数，找出重复的哈希值，利用哈希函数发生碰撞的可能性，进行n次尝试直到找到一对碰撞的输入。
 
-编译器：Visual Studio 2019  Python 3.10 
+最终成功攻击输出值为28比特的SM3函数。
 
+## 运行结果
 
+![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/pic1.png)
 
+# Rho攻击
+
+Rho攻击是一种密码分析技术，主要用于寻找哈希函数中的碰撞，Rho攻击用于破解SM3哈希算法。
+
+Rho攻击的基本思想是通过生成一系列随机输入，并计算它们的哈希值，然后检查是否存在相同的哈希值（即碰撞）。如果发现碰撞，那么就可以推断出哈希函数存在弱点。
+
+在Rho攻击函数中首先生成随机64位数r，然后将r转换为填充后的消息m。接下来，将m切分成128位的块，对每个块执行哈希运算，得到哈希结果Mn。然后，提取Mn的第一个字节并检查是否在已生成的随机值列表中出现过。如果出现重复，说明此时已经成环，找到了碰撞，攻击成功，否则将该字节加入已生成的随机值列表。
+## 运行结果
+![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/pic2.png)
+
+# 长度扩展攻击
+
+## MD结构
+MD结构首先对输入消息进行填充，让消息变成固定长度的整数倍（比如512或者1024）。这是因为压缩算法是不能对任意长度的消息进行处理的，所以在处理之前必须进行填充。通常来说，我们会使用0来填充整个消息块。
+
+但是这样做往往是不够的，因为通常对于压缩函数来说，会删除掉最后面的额外的0，所以导致填充和不填充最后计算出来的hash值是一样的。
+
+为避免这种情况，必须更改填充常量数据的第一位。由于常量填充通常由零组成，因此第一个填充位将强制更改为“ 1”。
+
+流程图如下：
+
+![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230719191149.png)
+
+## 长度扩展攻击
+
+长度扩展攻击是一种针对哈希函数的攻击方式，利用已知哈希值和初始向量构造合法的消息，并生成新的哈希值。
+
+攻击者通过已知的hash(message1)和message1的长度，从而能够知道hash（message1‖message2）的值。其中‖ 表示的是连接符。并且攻击性并需要知道message1到底是什么。
+
+攻击流程图如下所示：
+![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230719191657.png)
+
+攻击过程如下：
+1. 对任意消息r1，首先对其进行填充，得到 m=r1||padding；
+2. 调用SM3计算哈希值即 h1=SM3(m,IV)；
+3. 自选r2作为进行攻击的消息，计算 h2=SM3(m||r2,IV)即h2=SM3(r1||padding||r2,IV)；
+4. 计算 h3=SM3(r2,iv)，其中iv=h1即先前消息的哈希值；
+5. 比较h2与h3是否相同，若相同，则攻击成功。
+
+## 运行结果
+![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230719193451.png)
+# SM3优化加速
