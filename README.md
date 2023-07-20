@@ -13,6 +13,12 @@
 **Link：** 
 [SM3](https://github.com/ZixuanYan/Homework-Group105/tree/SM3)
 
+## Merkle Tree
+**Project：**
+1. Impl Merkle Tree following RFC6962
+
+**Link：** 
+[Merkle-Tree](https://github.com/ZixuanYan/Homework-Group105/tree/Merkle-Tree)
 # 其他
 
 ## 个人信息
