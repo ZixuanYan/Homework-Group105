@@ -15,7 +15,8 @@
 
 ## Merkle Tree
 **Project：**
-1. Impl Merkle Tree following RFC6962
+
+5. Impl Merkle Tree following RFC6962
 
 **Link：** 
 [Merkle-Tree](https://github.com/ZixuanYan/Homework-Group105/tree/Merkle-Tree)
