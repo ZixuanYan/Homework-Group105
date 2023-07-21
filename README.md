@@ -2,7 +2,8 @@
 **Merkle-Tree** 
 
 # 实验内容
-实现Merkle-Tree
+1. 实现Merkle-Tree
+2. 用实际的网络通信实现Merkle Tree
 
 # 作者
 姓名：闫子轩
@@ -17,7 +18,8 @@ Github账户地址：https://github.com/ZixuanYan
 
 编译器：Python 3.10，Visual Studio 2019
 
-# Merkle Tree原理
+# Merkle Tree实现
+## 实现原理
 Merkle树看起来非常像二叉树，其叶子节点上的值通常为数据块的哈希值，而非叶子节点上的值，所以有时候Merkle tree也表示为Hash tree，如下图：
 ![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230721173126.png)
 具体原理如下：
@@ -35,7 +37,21 @@ Merkle tree的优势在于它提供了高效的数据验证和检索方式，具
 
 ## 运行结果
 
-输入明文“SDUYZX”，得到如下结果：
+输入信息“SDUYZX”，得到如下结果：
 ![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230721172848.png)
 输出结果中，包括所有结点的哈希值，最后一行第一个元素是Merkle树的根哈希值（即唯一的哈希值），第二个元素是Merkle树的高度。
 
+# 实际网络实现Merkle Tree
+## 实现原理
+要实现使用实际的网络通信来实现Merkle Tree协议，需要添加一些功能来处理网络通信和消息传递，使用Python的socket模块实现基本的客户端-服务器通信以执行Merkle Tree协议。
+
+服务器端使用socket模块创建一个服务器套接字，监听传入的连接请求。一旦与客户端建立了连接，服务器端将接收到的数据解析为交易列表，并调用concat_and_hash_list()函数生成Merkle树的根哈希值和树的高度。然后，服务器将根哈希值和树的高度作为响应发送给客户端。
+
+客户端也使用socket模块创建一个客户端套接字，并连接到服务器。然后客户端从用户那里接收交易数据输入，将数据发送给服务器。最后，客户端从服务器接收响应并打印出来。
+## 运行结果
+输入信息“SDUYZX”，得到如下结果：
+
+服务端：
+![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230721180406.png)
+客户端：
+![9c062fec5aabb6efdb01ef12487d050d.png](:/040baa3720aa409e8fd47d4b1fef8788)
