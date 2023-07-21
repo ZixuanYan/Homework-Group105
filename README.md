@@ -54,4 +54,4 @@ Merkle tree的优势在于它提供了高效的数据验证和检索方式，具
 服务端：
 ![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230721180406.png)
 客户端：
-![9c062fec5aabb6efdb01ef12487d050d.png](:/040baa3720aa409e8fd47d4b1fef8788)
+![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230721181207.png)
