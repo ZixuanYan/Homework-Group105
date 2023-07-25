@@ -17,9 +17,19 @@
 **Project：**
 
 5. Impl Merkle Tree following RFC6962
+6. impl this protocol with actual network communication
 
 **Link：** 
 [Merkle-Tree](https://github.com/ZixuanYan/Homework-Group105/tree/Merkle-Tree)
+
+## AES
+**Project：**
+
+8. AES impl with ARM instruction
+9. AES / SM4 software implementation
+
+**Link：** 
+[AES](https://github.com/ZixuanYan/Homework-Group105/tree/AES)
 # 其他
 
 ## 个人信息
