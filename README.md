@@ -1,58 +1,106 @@
-# 项目汇总
+# 实验名称
 
-将所有项目分类，如下列所示，各项目简介与仓库链接如下：
+**AES**
 
-## SM3
+# 实验内容
 
-**Project：**
-1. implement the naïve birthday attack of reduced SM3
-2. implement the Rho method of reduced SM3
-3. implement length extension attack for SM3, SHA256, etc
-4. do your best to optimize SM3 implementation (software)
+1.  ARM指令实现AES
+2.  AES / SM4软件实现
 
-**Link：** 
-[SM3](https://github.com/ZixuanYan/Homework-Group105/tree/SM3)
-
-## Merkle Tree
-**Project：**
-
-5. Impl Merkle Tree following RFC6962
-
-**Link：** 
-[Merkle-Tree](https://github.com/ZixuanYan/Homework-Group105/tree/Merkle-Tree)
-# 其他
-
-## 个人信息
+# 作者
 
 姓名：闫子轩
 
-学号：202100460160
+组号：Group105
 
-班级：网络空间安全2021级1班
+学号：202100460160
 
 Github账户地址：https://github.com/ZixuanYan
 
-小组：Group105
+# 软件环境
 
-此项目组员仅本人 
+编译器：Python 3.10，Visual Studio 2019
+
+# ARM指令实现AES
+
+## μC/OS- II 操作系统的移植及初始化
+
+所谓移植，就是使一个实时内核能在微处理器或微控制器上运行。μC/OS- I I 是一种免费但性能稳定的实时操作系统，它是为嵌入式应用而设计的，它的绝大部分代码是用 C 语言编写的，CPU 硬件相关部分是用汇编语言编写的，总量约 200 行的汇编语言部分被压缩到最低限度，为的是便于移植到任何一种其它的 CPU 上。用户只要有标准的 ANSI的 C 交叉编译器，有汇编器、连接器等软件工具，就可以将 μC/OS- II嵌人到开发的产品中。它的特点是内核微小，结构清晰，具有良好的扩展性。
+
+μC/OS- II 实际上可以简单地看作是一个多任务的调度器，它的90%的代码都是用 C 语言写的，所以只要有相应的 C 语言编译器，基本上就可以直接移植到特定处理器上。移植工作的绝大部分都集中在多任务切换的实现上，因为这部分代码主要是用来保存和恢复处理器现场，因此不能用 C 语言，只能使用特定的处理器汇编语言完成。将μC/OS- II 移植到 ARM处理器上，需要完成的工作也非常简单，只需要修改三个（OS_CPU.H 文件、OS_CPU_C.C 文件和 OS_CPU_A.S 文件）和ARM体系结构相关的文件即可，即它的移植代码结构图如下图所示：
+
+![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230725133825.png)
+μC/OS- II 操作系统的初始化的主要代码都在 C 语言编写的 main()函数里。main 函数是从汇编跳入 C 代码中的第一个函数，它首先通过固件函数初始化（FirmInit）SEP3203 芯片，主要完成 PMU 和中断的初始化。然后调用 OSInit 用以完成操作系统的初始化工作，最后以 OSStart开始操作系统运行。
+## 加密算法
+AES 的加密实现的 AESEncrypt 汇编源程序结构如下：
+
+```
+AREA AESEncrypt, CODE, READONLY
+定义代码段
+ENTRY 程序入口
+START
+MOV R0，＃0；
+LDR R1，＝State；取状态地址
+LDR R2，＝Temp；取中间变量
+BL Roundfun
+……………… 调用轮函数
+MOV PC，lr 从子程序中返回
+END 程序结束
+```
+
+在上述汇编程序中，其参数的传递是通过数据栈来传递的，中间加密轮函数的调用步骤如下：
+
+1. BL KeyExpansion ——进行密钥扩展；
+2. BL AddRoundkey ——与扩展密钥进行异或，实现子密钥加；
+3. 用循环语句 Loop_i i＝0 to 9 ——中间循环 9 次轮变化；
+
+	S 盒变换时调用子程序 SubByte，进行字节替换；行变换时调用子程序 ShiftRow；列变换时调用子程序 MixColumn，进行列混淆；调用子程序AddRoundkey，进行密钥加；
+4. 最后一次轮变换中，进行了 S 盒变换、行变换和子密钥加。分别调用了以下程序:
+- BL SubByte
+- BL ShiftRow
+- BL AddRoundkey
+
+## 参考文献
+[1]金丽.基于ARM嵌入式系统的AES加密算法实现[J].科技信息,2010,No.332(12):1-2.
+
+[2]朱敏玲,张仰森,张伟等.基于FPGA和ARM的AES算法设计和实现[J].北京信息科技大学学报(自然科学版),2013,28(03):9-13.DOI:10.16508/j.cnki.11-5866/n.2013.03.003.
 
 
+# AES / SM4软件实现
 
-## 环境配置
+## AES实现
+### 基本结构
 
-采用平台环境配置如下：
+AES 为分组密码，分组密码也就是把明文分成一组一组的，每组长度相等，每次加密一组数据，直到加密完整个明文。在 AES 标准规范中，分组长度只能是 128 位，也就是说，每个分组为 16 个字节（每个字节 8 位）。密钥的长度可以使用 128 位、192 位或256 位。我们实现的是 AES-128，也就是密钥的长度为 128 位，加密轮数为 10 轮。其前 N-1 轮由 4 个不同的变换组成：字节代替、行移位、列混淆和轮密钥加。最后一轮仅包含三个变换。而在第一轮前面有一个起始的单变换（轮密钥加），可以视为 0 轮。
 
-**硬件环境：**
+- **字节代替（SubBytes）**：用一个 S 盒完成分组的字节到字节的代替。
+- **行移位（ShiftRows）**：一个简单的置换。
+- **列混淆（MixColumns）**：利用域 GF(28) 上的算术特性的一个代替。
+- **轮密钥加（AddRoundKey）**：当前分组和扩展密钥的一部分进行按位异或 XOR。
 
-处理器：AMD Ryzen 7 5800H with Radeon Graphics 3.20 GHz
+### 运行结果
 
-内存：16GB
+输入明文“SDUYZX”，密钥“YZXSDU”得到如下结果：
 
-**软件环境：**
+![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230725141908.png)
+## SM4实现
+### 基本结构
+SM4是一种对称分组密码算法，用于数据的加密和解密。
 
-操作系统：Windows 10 家庭中文版 x64
+定义常量：定义S盒(S-Box)、轮密钥RK(Round Key)、固定密钥FK(Fixed Key)和扩展密钥CK(Constant Key)等常量。这些常量在SM4算法中用于加密和解密过程中的置换和替换操作。
 
-编译器：Visual Studio 2019  Python 3.10 
+密钥处理：通过输入的密钥MK(Master Key)，将其拆分为四个字MK0、MK1、MK2、MK3。这四个字分别存储在MK数组中。使用密钥扩展算法K_，根据MK和FK生成32个轮密钥RK。生成的轮密钥RK存储在RK数组中。
 
+加密过程：输入明文x，将其拆分为四个字X，分别存储在X数组中。然后使用SM4加密算法SMJ对明文进行加密操作。
 
+1. 初始置换(IP)：对明文进行初始置换操作，将输入的数据按照一定规则重新排列。
 
+2. 轮函数T_：使用轮函数T_对明文进行循环运算。轮函数T_是SM4算法中核心的运算函数，包括非线性变换、线性变换和异或操作。
+
+3. 轮密钥加操作：在每轮循环中，将对应的轮密钥RK与运算结果进行异或操作。
+
+4. 逆初始置换(IP-1)：对加密结果进行逆初始置换操作，得到最终的密文。
+
+### 运行结果
+输入明文“202100460160”，密钥“123456”得到如下结果：
+![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230725144829.png)
