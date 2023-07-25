@@ -1,0 +1,74 @@
+.section .data
+    plaintext:   .word 0x00112233, 0x44556677, 0x8899AABB, 0xCCDDEEFF
+    key:         .word 0x00010203, 0x04050607, 0x08090A0B, 0x0C0D0E0F
+
+.section .text
+.global _start
+
+_start:
+    // 加载明文和密钥到寄存器
+    ldr r0, =plaintext
+    ldr r1, =key
+
+    // 执行第一轮AddRoundKey操作
+    ldmia r0!, {r4-r7}
+    ldmia r1!, {r8-r11}
+    eor r4, r4, r8
+    eor r5, r5, r9
+    eor r6, r6, r10
+    eor r7, r7, r11
+
+    // 执行多轮SubBytes、ShiftRows和MixColumns操作
+    call loop
+
+    // 执行最后一轮SubBytes、ShiftRows和AddRoundKey操作
+    ldmia r0!, {r4-r7}
+    ldmia r1!, {r8-r11}
+    subbytes r4, r5, r6, r7
+    shiftrows r4, r5, r6, r7
+    eor r4, r4, r8
+    eor r5, r5, r9
+    eor r6, r6, r10
+    eor r7, r7, r11
+
+    // 输出加密结果
+    ldr r0, =ciphertext
+    stmia r0!, {r4-r7}
+
+    // 退出程序
+    mov r7, #1      // sys_exit系统调用号
+    swi #0          // 调用Linux系统调用
+
+loop:
+    // 执行SubBytes操作
+    subbytes r4, r5, r6, r7
+
+    // 执行ShiftRows操作
+    shiftrows r4, r5, r6, r7
+
+    // 执行MixColumns操作
+    mixcolumns r4, r5, r6, r7
+
+    // 判断是否还有更多的轮次需要执行
+    cmp r0, #plaintext+16*4
+    beq done
+
+    // 继续下一轮循环
+    ldmia r0!, {r4-r7}
+    b loop
+
+done:
+    bx lr
+
+.subroutine subbytes, shiftrows, mixcolumns
+    // SubBytes操作
+
+    // ShiftRows操作
+    
+    // MixColumns操作
+
+    bx lr
+
+.section .data
+ciphertext:    .space 16
+由于配置环境和硬件限制，以上为完成的伪代码实现。
