@@ -1,69 +1,79 @@
-# 项目汇总
+# 实验名称
 
-将所有项目分类，如下列所示，各项目简介与仓库链接如下：
+**SM2**
 
-## SM3
+# 实验内容
 
-**Project：**
-1. implement the naïve birthday attack of reduced SM3
-2. implement the Rho method of reduced SM3
-3. implement length extension attack for SM3, SHA256, etc
-4. do your best to optimize SM3 implementation (software)
+1.  实现SM2加密算法
 
-**Link：** 
-[SM3](https://github.com/ZixuanYan/Homework-Group105/tree/SM3)
-
-## Merkle Tree
-**Project：**
-
-5. Impl Merkle Tree following RFC6962
-6. impl this protocol with actual network communication
-
-**Link：** 
-[Merkle-Tree](https://github.com/ZixuanYan/Homework-Group105/tree/Merkle-Tree)
-
-## AES
-**Project：**
-
-8. AES impl with ARM instruction
-9. AES / SM4 software implementation
-10. report on the application of this deduce technique in Ethereum with ECDSA
-
-**Link：** 
-[AES](https://github.com/ZixuanYan/Homework-Group105/tree/AES)
-# 其他
-
-## 个人信息
+# 作者
 
 姓名：闫子轩
 
-学号：202100460160
+组号：Group105
 
-班级：网络空间安全2021级1班
+学号：202100460160
 
 Github账户地址：https://github.com/ZixuanYan
 
-小组：Group105
+# 软件环境
 
-此项目组员仅本人 
+编译器：Python 3.10，Visual Studio 2019
 
+# SM2实现
 
+## SM2
 
-## 环境配置
+SM2算法是中国国家密码局推出的国产化算法，是基于椭圆曲线离散对数问题的难解性而构建的，相对于RSA算法，SM2具有密钥更小，运算速度更快，相同密钥长度下具有更高安全性等优势。
 
-采用平台环境配置如下：
+## GmSSL
 
-**硬件环境：**
+GmSSL是一个开源的加密包的python实现，支持SM2/SM3/SM4等国密(国家商用密码)算法、项目采用对商业应用友好的类BSD开源许可证，开源且可以用于闭源的商业应用，实现SM2首先需要导入该库:
 
-处理器：AMD Ryzen 7 5800H with Radeon Graphics 3.20 GHz
+`pip install gmssl`
 
-内存：16GB
+## 算法逻辑
 
-**软件环境：**
+### 获取公私钥
 
-操作系统：Windows 10 家庭中文版 x64
+椭圆曲线方程：$y^2 = x^3+ax+b \mod p$
 
-编译器：Visual Studio 2019  Python 3.10 
+1.  确认a、b、p，确认曲线
+2.  选择一个点P$( x_{g},y_{g} )$为基点
+3.  对曲线做切线、x对称点运行。次数为d,运算倍点为Q
+4.  d为私钥，Q为公钥
 
+### 密钥对的生成
 
+1.  产生随机整数d\[1,n-2\]
+2.  G为基点，计算点$P=(xP,yP)=[d]G$
+3.  密钥对为:(d,P)其中，d为私钥，P为公钥
 
+### 加密算法
+
+M为明文字符串
+
+1.  获取随机数k
+2.  $(x1,y1)=[k]G$
+3.  $S=[h]P$ ，h为余因子
+4.  $C1=(x2,y2)=[k]P$
+5.  $t=KDF(x2∥y2,klen)$，klen为M的长度，KDF是sm2的密钥派生函数
+6.  $C2=M+t$
+7.  $C3=Hash(x2∥M∥y2)$
+8.  $C=C1∥C2∥C3$
+
+### 解密算法
+
+C为密文字符串,klen为密文中C2的长度
+
+1.  C1=C里面获取，验证C1是否满足椭圆曲线。C2长度确定，可以获取C1内容。
+2.  $S=[h]C1$，S为无穷点，退出
+3.  $(x2,y2)=[d]C1$
+4.  $t=KDF(m2∥y2,klen)$
+5.  $\widetilde M=C2+t$
+6.  $u=Hash(x2∥ \widetilde M∥y2),u ?= C3$
+7.  $\widetilde M$为明文
+
+## 运行结果
+
+输入需要加密的信息：“SDUYZX”，得到以下结果： ![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230727153323.png)
