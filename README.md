@@ -76,4 +76,5 @@ C为密文字符串,klen为密文中C2的长度
 
 ## 运行结果
 
-输入需要加密的信息：“SDUYZX”，得到以下结果： ![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230727153323.png)
+输入需要加密的信息：“SDUYZX”，得到以下结果： 
+![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230727153323.png)
