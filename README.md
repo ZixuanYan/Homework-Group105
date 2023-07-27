@@ -31,6 +31,13 @@
 
 **Link：** 
 [AES](https://github.com/ZixuanYan/Homework-Group105/tree/AES)
+## SM2
+**Project：**
+
+11. impl sm2 with RFC6979
+
+**Link：** 
+[SM2](https://github.com/ZixuanYan/Homework-Group105/tree/SM2)
 # 其他
 
 ## 个人信息
@@ -63,7 +70,7 @@ Github账户地址：https://github.com/ZixuanYan
 
 操作系统：Windows 10 家庭中文版 x64
 
-编译器：Visual Studio 2019  Python 3.10 
+编译器：Visual Studio 2019 ，Python 3.10 
 
 
 
