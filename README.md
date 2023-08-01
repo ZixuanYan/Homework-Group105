@@ -45,7 +45,9 @@
 [SM2](https://github.com/ZixuanYan/Homework-Group105/tree/SM2)
 # 其他
 
-## 个人信息
+## 组员信息
+
+### 组员1
 
 姓名：闫子轩
 
@@ -57,8 +59,17 @@ Github账户地址：https://github.com/ZixuanYan
 
 小组：Group105
 
-此项目组员仅本人 
+### 组员2
 
+姓名：田行健
+
+学号：
+
+班级：网络空间安全2021级1班
+
+Github账户地址：
+
+小组：Group105
 
 
 ## 环境配置
