@@ -2,8 +2,8 @@
 **Merkle-Tree** 
 
 # 实验内容
-1. 实现Merkle-Tree
-2. 用实际的网络通信实现Merkle Tree
+1. Project5: 实现Merkle-Tree
+2. Project6: 用实际的网络通信实现Merkle Tree
 
 # 作者
 姓名：闫子轩
