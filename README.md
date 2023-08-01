@@ -35,6 +35,11 @@
 **Project：**
 
 11. impl sm2 with RFC6979
+12. verify the above pitfalls with proof-of-concept code
+13. Implement the above ECMH scheme
+14. Implement a PGP scheme with SM2
+15. implement sm2 2P sign with real network communication
+16. implement sm2 2P decrypt with real network communication
 
 **Link：** 
 [SM2](https://github.com/ZixuanYan/Homework-Group105/tree/SM2)
