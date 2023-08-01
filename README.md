@@ -71,7 +71,24 @@ Github账户地址：
 
 小组：Group105
 
+## 组员分工
 
+### 组员1-闫子轩
+完成如下项目：
+- #*Project1: implement the naïve birthday attack of reduced SM3
+- #*Project2: implement the Rho method of reduced SM3
+- #*Project3: implement length extension attack for SM3, SHA256, etc.
+- #*Project4: do your best to optimize SM3 implementation (software)
+- #*Project5: Impl Merkle Tree following RFC6962
+- #*Project6: impl this protocol with actual network communication
+- #*Project8: AES impl with ARM instruction
+- #*Project9: AES / SM4 software implementation
+- #*Project10: report on the application of this deduce technique in Ethereum with ECDSA
+- #*Project11: impl sm2 with RFC6979
+- #*Project12: verify the above pitfalls with proof-of-concept code
+- #*Project13: Implement the above ECMH scheme
+
+合计12个项目。
 ## 环境配置
 
 采用平台环境配置如下：
