@@ -1,6 +1,6 @@
 # 项目汇总
 
-将所有项目分类，如下列所示，各项目简介与分组链接如下：
+将所有项目分类，如下列所示，各项目简介与仓库链接如下：
 
 ## SM3
 
@@ -47,8 +47,6 @@
 
 ## 组员信息
 
-### 组员1
-
 姓名：闫子轩
 
 学号：202100460160
@@ -59,21 +57,9 @@ Github账户地址：https://github.com/ZixuanYan
 
 小组：Group105
 
-### 组员2
+本组项目都由本人完成
+## 项目完成情况
 
-姓名：田行健
-
-学号：
-
-班级：网络空间安全2021级1班
-
-Github账户地址：
-
-小组：Group105
-
-## 组员分工
-
-### 组员1-闫子轩
 完成如下项目：
 - #*Project1: implement the naïve birthday attack of reduced SM3
 - #*Project2: implement the Rho method of reduced SM3
@@ -88,7 +74,7 @@ Github账户地址：
 - #*Project12: verify the above pitfalls with proof-of-concept code
 - #*Project13: Implement the above ECMH scheme
 
-合计12个项目。
+合计个项目。
 ## 环境配置
 
 采用平台环境配置如下：
