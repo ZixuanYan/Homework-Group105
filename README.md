@@ -122,7 +122,10 @@ PGP是个混合加密算法，它由一个对称加密算法、一个非对称�
 # 实现SM2 2p签名与真实网络通信
 ## 实现原理
 ![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230803215326.png)
+
 ## 运行结果
+首先运行2P_sign_client2,而后运行2P_sign_client1.
+
 ![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230804094317.png)
 
 ![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230804094358.png)
@@ -130,6 +133,8 @@ PGP是个混合加密算法，它由一个对称加密算法、一个非对称�
 ## 实验原理
 ![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230804104636.png)
 ## 运行结果
+首先运行2P_dec_client2,而后运行2P_dec_client1.
+
 ![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230804103600.png)
 
 ![](https://zx777-1319535985.cos.ap-beijing.myqcloud.com/20230804103644.png)
