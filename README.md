@@ -1,6 +1,6 @@
 # 项目汇总
 
-将所有项目分类，如下列所示，各项目简介与仓库链接如下：
+将所有项目分类，如下列所示，各项目简介与分支链接如下：
 
 ## SM3
 
@@ -43,6 +43,7 @@
 
 **Link：** 
 [SM2](https://github.com/ZixuanYan/Homework-Group105/tree/SM2)
+
 # 其他
 
 ## 组员信息
@@ -73,8 +74,11 @@ Github账户地址：https://github.com/ZixuanYan
 - #*Project11: impl sm2 with RFC6979
 - #*Project12: verify the above pitfalls with proof-of-concept code
 - #*Project13: Implement the above ECMH scheme
+- #*Project14: Implement a PGP scheme with SM2
+- #*Project15: implement sm2 2P sign with real network communication
+- #*Project16: implement sm2 2P decrypt with real network communication
 
-合计个项目。
+合计15个项目。
 ## 环境配置
 
 采用平台环境配置如下：
